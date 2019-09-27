@@ -13,14 +13,14 @@ import os
 
 BASE_PATH = os.path.dirname(__file__)
 
-HOST = "127.0.0.1"
+HOST = '127.0.0.1'
 PORT = 5672
-VHOST = "/"
-USERNAME = "guest"
-PASSWORD = "guest"
-EXCHANGE = "direct-exchange-A"
-QUEUE = "queue-py"
-ROUTING_KEY = "routing-key-to-queue-py"
+VHOST = '/'
+USERNAME = 'guest'
+PASSWORD = 'guest'
+EXCHANGE = 'direct-exchange-A'
+QUEUE = 'queue-py'
+ROUTING_KEY = 'routing-key-to-queue-py'
 
 
 class PikaClient:
@@ -89,7 +89,7 @@ class Consumer(PikaClient):
         except ValueError as e:
             print('ValueError:', e)
             msg = {}
-        msg['time'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        msg['time'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
         # 给每一个 WebSocket 链接者写入 msg
         for listener in self.listeners:
             listener.write_message(msg)
@@ -158,7 +158,7 @@ class ChatWebSocketHandler(WebSocketHandler):
 
     # 连接建立: 将连接者添加到队列
     def open(self):
-        print("WebSocket opened(self), self=", self)
+        print('WebSocket opened(self), self=', self)
         self.application.consumer.add_listener(self)
 
     # 发送消息: 调用publisher发布
@@ -167,7 +167,7 @@ class ChatWebSocketHandler(WebSocketHandler):
 
     # 关闭连接: 将连接者从队列中移除
     def on_close(self):
-        print("WebSocket closed(self), self=", self)
+        print('WebSocket closed(self), self=', self)
         self.application.consumer.remove_listener(self)
 
     # 允许websocket跨域
