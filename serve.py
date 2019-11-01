@@ -145,12 +145,12 @@ class ChatRoomHandler(RequestHandler):
             data = json.loads(s)
         finally:
             nickname = data.get('nickname', '匿名')
-            msg = data.get('msg', 'this is a message')
+            msg = data.get('msg', '这是一条匿名信息')
             info = '{"nickname": "%s", "msg": "%s"}' % (nickname, msg)
             self.application.publisher.publish(info)
             self.write({
-                'code': 200,
-                'errMsg': 'ok'}
+                'err_code': 0,
+                'err_msg': 'ok'}
             )
 
 
@@ -176,7 +176,7 @@ class ChatWebSocketHandler(WebSocketHandler):
 
 
 handlers = [
-    (r'/chat', ChatRoomHandler),
+    (r'/', ChatRoomHandler),
     (r'/ws', ChatWebSocketHandler),
 ]
 
@@ -192,8 +192,8 @@ def main():
     app.consumer.connect()
     app.publisher = Publisher(io_loop)
     app.publisher.connect()
-    app.listen(8888)
-    print(f'[ {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())} ] Run server http://127.0.0.1:8888')
+    app.listen(5000)
+    print(f'[ {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())} ] Run server http://127.0.0.1:5000')
     io_loop.start()
 
 
