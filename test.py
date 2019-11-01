@@ -16,9 +16,7 @@ async def fetch(url, data):
 
 
 async def main():
-    tasks = []
-    for i in range(1, 500):
-        tasks.append(fetch('http://localhost:5000/', data=dict(nickname=random.choice(speaker), msg=f'-- {i} --')))
+    tasks = [fetch('http://localhost:5000/', dict(nickname=random.choice(speaker), msg=f'-{i}-')) for i in range(500)]
     await asyncio.wait(tasks)
 
 
